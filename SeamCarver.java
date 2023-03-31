@@ -334,57 +334,24 @@ public class SeamCarver {
         // System.out.println("\n--------------------");
     }
  
-    //  unit testing (optional)
+    /**
+     * Takes the ocean.jpg and removes 50 vertical seams, 
+     * displays both the original and the result, 
+     * and saves the result to ocean_processed.jpg.
+     * @param args -- not required.
+     */
     public static void main(String[] args) {
-        // Picture p = new Picture("6x5.png");
-        // SeamCarver s = new SeamCarver(p);
-        
-        // s.removeHorizontalSeam(s.findHorizontalSeam());
-        // s.removeVerticalSeam(s.findVerticalSeam());
-        // s.removeVerticalSeam(s.findVerticalSeam());
-        // s.removeVerticalSeam(s.findVerticalSeam());
-        // s.removeVerticalSeam(s.findVerticalSeam());
-        
-        Picture pTest = new Picture(6, 6);
-        String hex = "#050003 #020808 #090104 #080403 #050301 #000104 #020807 #000706 #010801 #050608 #050007 #000605 #070100 #040403 #040400 #010607 #020002 #080809 #080609 #070906 #060308 #070004 #080705 #080602 #080405 #020407 #000501 #070207 #010804 #060306 #080304 #080907 #030005 #070103 #050103 #000102";
-        hex.replace("\n", "");
-        String[] hexnums = hex.split(" ");
-        int count = 0;
-        for (String hexnum: hexnums) {
-            int col = count % 6;
-            int row = count / 6;
-            // System.out.println(col + " " + row);
-            int red = Integer.parseInt(hexnum.substring(1,3), 16);
-            int green = Integer.parseInt(hexnum.substring(3,5), 16);
-            int blue = Integer.parseInt(hexnum.substring(5,7), 16);
-            // System.out.println(red + green + blue);
-            pTest.set(col, row, new Color(red, green, blue));
-            count++;
-        }
 
-        SeamCarver sTest = new SeamCarver(pTest);
-        sTest.removeVerticalSeam(new int[] {3, 4, 3, 3, 3, 2});
-        // int[] problemSeam = sTest.findVerticalSeam();
+        Picture p = new Picture("ocean.jpg");
+        p.show();
 
-        System.out.println(sTest.height() + "  " + sTest.width());
-
-        // Picture p2 = new Picture("3x4.png");
-        // System.out.print(p2.height());
-        // System.out.print(p2.height());
-
-        Picture p3 = new Picture("tennis.jpg");
-        p3.show();
-
-        SeamCarver s4 = new SeamCarver(p3);
-        System.out.println(p3.height());
-        System.out.println(s4.findVerticalSeam().length);
-        s4.removeVerticalSeam(s4.findVerticalSeam());
+        SeamCarver sc = new SeamCarver(p);
         
         for (int i = 0; i < 50; i++) {
-            s4.removeVerticalSeam(s4.findVerticalSeam());
-            s4.removeHorizontalSeam(s4.findHorizontalSeam());
-            s4.removeHorizontalSeam(s4.findHorizontalSeam());
+            sc.removeVerticalSeam(sc.findVerticalSeam());
         }
-        s4.picture().show();
+        Picture processed = sc.picture();
+        processed.show();
+        processed.save("ocean_processed.jpg");
     }
  }
